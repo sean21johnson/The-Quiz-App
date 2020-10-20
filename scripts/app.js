@@ -12,11 +12,8 @@ function startScreen() {
     `;
 }
 
-// startScreen();
-// Tested & Working
-
 /* This function is creating the HTML that displays which question # the user is on */
-function questionNumber() {   
+function questionNumbers() {   
     return `
         <ul class="question-current">
             <li id="question-number">
@@ -24,9 +21,6 @@ function questionNumber() {
             </li>
     `;
 }
-
-// questionNumber();
-// Tested & Working
 
 /* This function is creating the HTML that displays the score for the user at whichever question they are currently on */
 function overallScore() {
@@ -38,9 +32,6 @@ function overallScore() {
         </ul>
     `;  
 }
-
-// overallScore();
-// Tested & Working
 
 /* This function is creating the HTML that displays the list of answers to a given question */
 function showAnswers() {
@@ -60,14 +51,17 @@ function showAnswers() {
     return answersHtml;
 }
 
-// showAnswers();
-// Tested & Working
-
 /*This function is creating the HTML that displays a given question.  Also note that the showAnswers() function will need to be called here in order to get the answers to reflect */
-
 function showQuestion() {
     let questionNumber = store.questions[store.questionNumber];
-    return `
+    let thisQuestion = ''
+    thisQuestion += `
+        <div class="question-number">
+        ${questionNumbers()}
+        </div>
+        <div class="scorer"
+        ${overallScore()}
+        </div>
         <form id="questions-form" class="questions-form">
             <fieldset>
                 <div class="question">
@@ -83,11 +77,10 @@ function showQuestion() {
             </fieldset>
         </form>
     `;
+    return thisQuestion;
 }
 
-// showQuestion()
-// Tested & Working
-
+/*This function is creating the HTML that will reflect on the results page*/
 function resultsPage() {
     return `
         <div class="results">
@@ -101,12 +94,9 @@ function resultsPage() {
     `
 }
 
-// resultsPage();
-// Tested & Working
-
 function answerResponse(input) {
     let response = '';
-    let rightAnswer = store.quetsions[store.questionNumber].correctAnswer;
+    let rightAnswer = store.questions[store.questionNumber].correctAnswer;
     if (input === 'correct') {
         response = `
         <div class="correct-response">You answered correctly!</div>
@@ -120,5 +110,39 @@ function answerResponse(input) {
     return response;
 }
 
+/* This function renders all of the functions onto the screen for the user */
+function render() {
+        let text = ' '
+        if (store.quizStarted === false){
+            $('main').html(startScreen());
+        } 
+        else if (store.quizStarted === true){
+            $('main').html(showAnswers())
+            $('main').html(showQuestion())
+        }
+}
+
+/*This function will effectively show everything on the screen by linking to the main HTML div */
+function main() {
+    render();
+    handleStartQuiz();
+}
+
+/*EVENT HANDLER functions below*/
+
+/* This function handles when a user clicks 'Start The Quiz' */ 
+function handleStartQuiz() {
+    $('main').on('click', '#start', function(){
+        store.quizStarted = true;
+        render();
+    })
+}
+
+/* This function handles when a user submits the answer to a given question */
+function handleAnswerSubmision() {
+    $('main').on('click, '#answer-submit-button',)
+}
+
+$(main);
 
 
