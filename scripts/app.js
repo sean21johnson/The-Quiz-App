@@ -122,11 +122,7 @@ function render() {
         }
 }
 
-/*This function will effectively show everything on the screen by linking to the main HTML div */
-function main() {
-    render();
-    handleStartQuiz();
-}
+
 
 /*EVENT HANDLER functions below*/
 
@@ -139,8 +135,23 @@ function handleStartQuiz() {
 }
 
 /* This function handles when a user submits the answer to a given question */
-function handleAnswerSubmision() {
-    $('main').on('click, '#answer-submit-button',)
+function handleAnswerSubmission() {
+    let rightAnswer = store.questions[store.questionNumber].correctAnswer;
+    $('main').on('click', '#answer-submit-button', function(evt){
+        evt.preventDefault();
+        let selectedAnswer = $('input[name=choices]:checked').val();
+            if (selectedAnswer === rightAnswer) {
+                store.score++;
+            }
+           render(); 
+    })
+}
+
+/*This function will effectively show everything on the screen by linking to the main HTML div */
+function main() {
+    render();
+    handleStartQuiz();
+    handleAnswerSubmission();
 }
 
 $(main);
