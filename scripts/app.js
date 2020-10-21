@@ -114,10 +114,9 @@ function answerResponse(input) {
 
 /* This function renders all of the functions onto the screen for the user */
 function render() {
-        let text = ' '
         if (store.quizStarted === false){
             $('main').html(startScreen());
-        } 
+        }
         else if (store.quizStarted === true){
             // $('main').html(showAnswers())
             $('main').html(showQuestion());
@@ -128,6 +127,18 @@ function render() {
 
 
 /*EVENT HANDLER functions below*/
+function restartTheQuiz() {
+    store.quizStarted = false;
+    store.currentQuestion = 0;
+    store.score = 0;
+}
+
+function handleRestartQuiz() {
+    $('main').on('click', '#redo', function(){
+        restartTheQuiz();
+        $('main').html(startScreen());
+    })
+}
 
 /* This function handles when a user clicks 'Start The Quiz' */ 
 function handleStartQuiz() {
@@ -141,15 +152,21 @@ function handleStartQuiz() {
 function handleNextQuestion() {
     $('main').on('click', '#next-question-button', function(evt){
         evt.preventDefault();
-        if (store.questionNumber >= store.questions.length + 1) {
+        if (store.questionNumber >= store.questions.length) {
             $('main').html(resultsPage());
         }
         else {
             render();
         }
-        // handleAnswerSubmission() 
     })
 }
+
+// function handleTryAgain() {
+//     $('main').on('click', '#redo', function(evt){
+//         evt.preventDefault();
+//         return startScreen();
+//     })
+// }
 
 /* This function handles when a user submits the answer to a given question */
 function handleAnswerSubmission() {
@@ -176,6 +193,7 @@ function main() {
     handleAnswerSubmission();
     handleNextQuestion();
     resultsPage();
+    handleRestartQuiz();
 }
 
 $(main);
