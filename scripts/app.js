@@ -43,7 +43,7 @@ function showAnswers() {
         answersHtml += `
         <div id="choice-container-${index}">
             <input type="radio" name="choices" id="choice${index + 1}" value="${answer}" tabindex="${index + 1}" required>
-            <label for "choice${index + 1}"> ${answer}</label>
+            <label for "choice${index + 1} tabindex=${index + 1}"> ${answer} </label>
         </div>
         `;
         index++;
@@ -62,7 +62,7 @@ function showQuestion() {
         <div class="scorer"
         ${overallScore()}
         </div>
-        <form id="questions-form" class="questions-form">
+        <form id="questions-form">
             <fieldset>
                 <div class="question">
                     <legend> ${questionNumber.question}</legend>
@@ -72,7 +72,7 @@ function showQuestion() {
                         ${showAnswers()}
                     </div>
                 </div>
-                <button type="submit" id="answer-submit-button" tabindex="5">Submit Answer</button>
+                <button type="submit" id="answer-submit-button" >Submit Answer</button>
             </fieldset>
         </form>
     `;
@@ -83,12 +83,10 @@ function showQuestion() {
 function resultsPage() {
     return `
         <div class="results">
-            <form id="js-restart-quiz">
                 <fieldset>
                     <legend>Final Score: ${store.score} out of ${store.questions.length}</legend>
                     <button type="button" id="redo"> Try Quiz Again </button>
                 </fieldset>
-            </form>
         </div>
     `
 }
@@ -100,13 +98,13 @@ function answerResponse(input) {
     if (input === 'correct') {
         response = `
         <div class="correct-response">You answered correctly!</div>
-        <button type="button" id="next-question-button" tabindex="6">Next Question</button>
+        <button type="button" id="next-question-button" >Next Question</button>
         `;
     }
     else if (input === 'incorrect') {
         response = `
         <div class="wrong-response">You answered incorrectly. The correct answer is ${rightAnswer}.</div>
-        <button type="button" id="next-question-button" tabindex="6">Next Question</button>
+        <button type="button" id="next-question-button">Next Question</button>
         `;
     }
     return response;
@@ -136,7 +134,7 @@ function restartTheQuiz() {
 function handleRestartQuiz() {
     $('main').on('click', '#redo', function(){
         restartTheQuiz();
-        $('main').html(startScreen());
+        $('main').html(startScreen)
     })
 }
 
@@ -170,7 +168,7 @@ function handleNextQuestion() {
 
 /* This function handles when a user submits the answer to a given question */
 function handleAnswerSubmission() {
-    $('main').on('click', '#answer-submit-button', function(evt){
+    $('main').submit('#question-form', function(evt){
         evt.preventDefault();
         let rightAnswer = store.questions[store.questionNumber].correctAnswer;
         let selectedAnswer = $('input[name=choices]:checked').val();
