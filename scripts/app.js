@@ -95,13 +95,24 @@ function answerResponse(input) {
     let response = '';
     let rightAnswer = store.questions[store.questionNumber - 1].correctAnswer;
     if (store.questionNumber === store.questions.length){
-        response = `
-        <div class="correct-response">You answered correctly!</div>
-        <button type="button" id="show-results" >Show Results</button>
-        `; 
-        $('main').on('click', '#show-results', function(evt){
-            return $('main').html(resultsPage());
-        })
+        if (input === 'correct'){
+                response = `
+            <div class="correct-response">You answered correctly!</div>
+            <button type="button" id="show-results" >Show Results</button>
+            `; 
+            $('main').on('click', '#show-results', function(evt){
+                return $('main').html(resultsPage());
+            })
+        }
+        else if (input === 'incorrect') {
+                response = `
+            <div class="correct-response">You answered incorrectly!</div>
+            <button type="button" id="show-results" >Show Results</button>
+            `; 
+            $('main').on('click', '#show-results', function(evt){
+                return $('main').html(resultsPage());
+            })
+        }
     }
     else if (input === 'correct') {
         response = `
