@@ -136,6 +136,15 @@ function handleStartQuiz() {
     })
 }
 
+/*This function handles when a user clicks on "Next Button" */
+function handleNextQuestion() {
+    $('main').on('click', '#next-question-button', function(evt){
+        evt.preventDefault();
+        render();
+        // handleAnswerSubmission() 
+    })
+}
+
 /* This function handles when a user submits the answer to a given question */
 function handleAnswerSubmission() {
     let rightAnswer = store.questions[store.questionNumber].correctAnswer;
@@ -148,7 +157,6 @@ function handleAnswerSubmission() {
                 return $('main').html(answerResponse('correct'));
             }
             else if (selectedAnswer !== rightAnswer) {
-                store.score++;
                 store.questionNumber++
                 return $('main').html(answerResponse('incorrect'));
             }
@@ -160,6 +168,7 @@ function main() {
     render();
     handleStartQuiz();
     handleAnswerSubmission();
+    handleNextQuestion();
 }
 
 $(main);
