@@ -52,7 +52,7 @@ const store = {
         'The gangs',
         'The dragons'
       ],
-      correctAnswer: "Kenny"
+      correctAnswer: "The dementors"
     }
   ],
   quizStarted: false,

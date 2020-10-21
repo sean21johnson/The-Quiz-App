@@ -4,9 +4,9 @@
 function startScreen() {
     return `
         <div class="starter">
-            <p>This quiz will determine whether or not you are a true fan of The Office</p>
-            <p>There will be 5 questions total</p>
-            <p>If you can get every question right, you are entitled to label yourself a SuperFan</p>
+            <p>This quiz will determine whether or not you are a true fan of The Office.</p>
+            <p>There will be 5 questions total.</p>
+            <p>If you can get every question right, you may label yourself a Super Fan!</p>
             <button type="button" id="start">Start The Quiz</button>
         </div>
     `;
@@ -73,7 +73,6 @@ function showQuestion() {
                     </div>
                 </div>
                 <button type="submit" id="answer-submit-button" tabindex="5">Submit Answer</button>
-              
             </fieldset>
         </form>
     `;
@@ -96,7 +95,8 @@ function resultsPage() {
 
 function answerResponse(input) {
     let response = '';
-    let rightAnswer = store.questions[store.questionNumber].correctAnswer;
+    let rightAnswer = store.questions[store.questionNumber - 1].correctAnswer;
+    console.log(rightAnswer);
     if (input === 'correct') {
         response = `
         <div class="correct-response">You answered correctly!</div>
@@ -119,9 +119,10 @@ function render() {
             $('main').html(startScreen());
         } 
         else if (store.quizStarted === true){
-            $('main').html(showAnswers())
-            $('main').html(showQuestion())
+            // $('main').html(showAnswers())
+            $('main').html(showQuestion());
         }
+
 }
 
 
@@ -140,16 +141,21 @@ function handleStartQuiz() {
 function handleNextQuestion() {
     $('main').on('click', '#next-question-button', function(evt){
         evt.preventDefault();
-        render();
+        if (store.questionNumber >= store.questions.length + 1) {
+            $('main').html(resultsPage());
+        }
+        else {
+            render();
+        }
         // handleAnswerSubmission() 
     })
 }
 
 /* This function handles when a user submits the answer to a given question */
 function handleAnswerSubmission() {
-    let rightAnswer = store.questions[store.questionNumber].correctAnswer;
     $('main').on('click', '#answer-submit-button', function(evt){
         evt.preventDefault();
+        let rightAnswer = store.questions[store.questionNumber].correctAnswer;
         let selectedAnswer = $('input[name=choices]:checked').val();
             if (selectedAnswer === rightAnswer) {
                 store.score++;
@@ -165,10 +171,11 @@ function handleAnswerSubmission() {
 
 /*This function will effectively show everything on the screen by linking to the main HTML div */
 function main() {
-    render();
     handleStartQuiz();
+    render();
     handleAnswerSubmission();
     handleNextQuestion();
+    resultsPage();
 }
 
 $(main);
