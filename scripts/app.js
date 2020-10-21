@@ -43,7 +43,7 @@ function showAnswers() {
         answersHtml += `
         <div id="choice-container-${index}">
             <input type="radio" name="choices" id="choice${index + 1}" value="${answer}" tabindex="${index + 1}" required>
-            <label for "choice${index + 1} tabindex=${index + 1}"> ${answer} </label>
+            <label for "choice${index + 1} tabindex=${index + 1} aria-checked=false> ${answer} </label>
         </div>
         `;
         index++;
@@ -94,8 +94,16 @@ function resultsPage() {
 function answerResponse(input) {
     let response = '';
     let rightAnswer = store.questions[store.questionNumber - 1].correctAnswer;
-    console.log(rightAnswer);
-    if (input === 'correct') {
+    if (store.questionNumber === store.questions.length){
+        response = `
+        <div class="correct-response">You answered correctly!</div>
+        <button type="button" id="show-results" >Show Results</button>
+        `; 
+        $('main').on('click', '#show-results', function(evt){
+            return $('main').html(resultsPage());
+        })
+    }
+    else if (input === 'correct') {
         response = `
         <div class="correct-response">You answered correctly!</div>
         <button type="button" id="next-question-button" >Next Question</button>
