@@ -1,1 +1,1 @@
-### Boilerplate app structure for Quiz App project
+This is my Quiz App which is a triva challenge about NBC's The Office. In this app, I utilize jQuery to travers and manipulate the DOM. The index.HTML file is bare-bones and template generation functions within the Javascript is used instead. Event handlers are used to determine how a user progresses through the quiz as it listens for mouse clicks and form submissions.
