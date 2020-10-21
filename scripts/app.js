@@ -106,7 +106,7 @@ function answerResponse(input) {
         }
         else if (input === 'incorrect') {
                 response = `
-            <div class="correct-response">You answered incorrectly!</div>
+            <div class="correct-response">You answered incorrectly. The correct answer is ${rightAnswer}.</div>
             <button type="button" id="show-results" >Show Results</button>
             `; 
             $('main').on('click', '#show-results', function(evt){
@@ -141,15 +141,16 @@ function render() {
 
 }
 
-
-
-/*EVENT HANDLER functions below*/
+/*This function resets the values on score for when the quiz needs to restart.  And is subsequently called in the handleRestartQuiz function */
 function restartTheQuiz() {
     store.quizStarted = false;
-    store.currentQuestion = 0;
+    store.questionNumber = 0;
     store.score = 0;
 }
 
+/*EVENT HANDLER functions below*/
+
+/* This function handles when the quiz needs to be restarted */
 function handleRestartQuiz() {
     $('main').on('click', '#redo', function(){
         restartTheQuiz();
@@ -177,13 +178,6 @@ function handleNextQuestion() {
         }
     })
 }
-
-// function handleTryAgain() {
-//     $('main').on('click', '#redo', function(evt){
-//         evt.preventDefault();
-//         return startScreen();
-//     })
-// }
 
 /* This function handles when a user submits the answer to a given question */
 function handleAnswerSubmission() {
