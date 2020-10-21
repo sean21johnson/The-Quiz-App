@@ -73,7 +73,7 @@ function showQuestion() {
                     </div>
                 </div>
                 <button type="submit" id="answer-submit-button" tabindex="5">Submit Answer</button>
-                <button type="button" id="next-question-button" tabindex="6">Next Question></button>
+              
             </fieldset>
         </form>
     `;
@@ -100,11 +100,13 @@ function answerResponse(input) {
     if (input === 'correct') {
         response = `
         <div class="correct-response">You answered correctly!</div>
+        <button type="button" id="next-question-button" tabindex="6">Next Question</button>
         `;
     }
     else if (input === 'incorrect') {
         response = `
-        div class="wrong-response">You answered incorrectly. The correct answer is ${rightAnswer}.</div>
+        <div class="wrong-response">You answered incorrectly. The correct answer is ${rightAnswer}.</div>
+        <button type="button" id="next-question-button" tabindex="6">Next Question</button>
         `;
     }
     return response;
@@ -142,8 +144,14 @@ function handleAnswerSubmission() {
         let selectedAnswer = $('input[name=choices]:checked').val();
             if (selectedAnswer === rightAnswer) {
                 store.score++;
+                store.questionNumber++
+                return $('main').html(answerResponse('correct'));
             }
-           render(); 
+            else if (selectedAnswer !== rightAnswer) {
+                store.score++;
+                store.questionNumber++
+                return $('main').html(answerResponse('incorrect'));
+            }
     })
 }
 
