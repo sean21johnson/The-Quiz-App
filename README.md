@@ -2,6 +2,6 @@ This is our Quiz App which is a triva challenge about NBC's The Office. In this 
 
 Team Members:
 
-In Ho Kim
-Theodore Stansbury
+In Ho Kim,
+Theodore Stansbury,
 Sean Johnson
